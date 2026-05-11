@@ -168,7 +168,7 @@ with app.app_context():
         TimetableSlot(
             subject_id=computer_science_subjects["web_programming"].id,
             professor_id=professors["rossi"].id,
-            room_id=rooms["lab_1"].id,
+            room_id=rooms["room_a"].id,
             day="Friday",
             start_time=parse_time("11:00"),
             end_time=parse_time("13:00"),
