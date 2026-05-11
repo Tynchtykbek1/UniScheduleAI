@@ -1,37 +1,66 @@
 # UniSchedule AI
 
-UniSchedule AI is a Flask web application for a university class timetable with an AI assistant.
+UniSchedule AI is a Flask web application for managing university timetables with a student-facing AI assistant.
 
-## Setup
+## Setup on Windows
 
-Create and activate a virtual environment:
-
-```bash
-python3 -m venv .venv
-```
-
-For macOS/Linux:
-
-```bash
-source .venv/bin/activate
-```
-
-For Windows:
+Create a virtual environment:
 
 ```powershell
-.venv\Scripts\activate
+python -m venv .venv
 ```
 
-Install dependencies:
+Activate it:
 
-```bash
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+If PowerShell blocks activation, run:
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+```
+
+Then activate the virtual environment again.
+
+## Install Dependencies
+
+```powershell
 pip install -r requirements.txt
 ```
 
-Create your local environment file:
+## Environment File
 
-```bash
-cp .env.example .env
+Copy the example environment file:
+
+```powershell
+copy .env.example .env
 ```
 
-The database and `app.py` will be created in later steps.
+Edit `.env` if needed. If `OPENAI_API_KEY` is not set, the AI assistant will return a helpful fallback message instead of calling OpenAI.
+
+## Seed the Database
+
+This resets the SQLite database and loads demo data:
+
+```powershell
+python seed.py
+```
+
+Demo logins:
+
+- Admin: `admin` / `admin123`
+- Student: `student` / `student123`
+
+## Run the App
+
+```powershell
+python app.py
+```
+
+Open the local URL shown in the terminal, usually:
+
+```text
+http://127.0.0.1:5000
+```
