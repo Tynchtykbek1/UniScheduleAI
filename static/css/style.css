@@ -1,0 +1,247 @@
+:root {
+    --uni-primary: #1f4f8f;
+    --uni-primary-dark: #183c6d;
+    --uni-accent: #2c7a7b;
+    --uni-bg: #f6f8fb;
+    --uni-border: #dce3ee;
+    --uni-text: #1f2937;
+    --uni-muted: #64748b;
+    --uni-shadow: 0 8px 24px rgba(31, 79, 143, 0.08);
+}
+
+body {
+    background: var(--uni-bg);
+    color: var(--uni-text);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.55;
+}
+
+main.container {
+    min-height: calc(100vh - 170px);
+}
+
+.navbar.bg-primary {
+    background: var(--uni-primary) !important;
+    box-shadow: 0 3px 14px rgba(15, 23, 42, 0.12);
+}
+
+.navbar-brand {
+    font-weight: 750;
+    letter-spacing: 0;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    border-radius: 6px;
+    color: rgba(255, 255, 255, 0.82);
+    font-weight: 500;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:focus,
+.navbar-dark .navbar-nav .nav-link.active {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+}
+
+.card {
+    border: 1px solid var(--uni-border);
+    border-radius: 8px;
+    box-shadow: var(--uni-shadow);
+}
+
+.card-body {
+    padding: 1.35rem;
+}
+
+.btn {
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: var(--uni-primary);
+    border-color: var(--uni-primary);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background: var(--uni-primary-dark);
+    border-color: var(--uni-primary-dark);
+}
+
+.btn-outline-primary {
+    border-color: var(--uni-primary);
+    color: var(--uni-primary);
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+    background: var(--uni-primary);
+    border-color: var(--uni-primary);
+}
+
+.form-control,
+.form-select {
+    border-color: var(--uni-border);
+    border-radius: 6px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--uni-primary);
+    box-shadow: 0 0 0 0.2rem rgba(31, 79, 143, 0.15);
+}
+
+form.row {
+    background: #fff;
+    border: 1px solid var(--uni-border);
+    border-radius: 8px;
+    box-shadow: var(--uni-shadow);
+    padding: 1rem;
+}
+
+.table-responsive {
+    background: #fff;
+    border: 1px solid var(--uni-border);
+    border-radius: 8px;
+    box-shadow: var(--uni-shadow);
+}
+
+.table {
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+.table thead th {
+    background: #eef4fb;
+    border-bottom: 1px solid var(--uni-border);
+    color: #334155;
+    font-size: 0.82rem;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.table tbody tr:hover {
+    background: #f8fbff;
+}
+
+.table td,
+.table th {
+    padding: 0.85rem;
+}
+
+.table form {
+    margin: 0;
+}
+
+.table .form-control,
+.table .form-select {
+    min-width: 120px;
+}
+
+.table td:first-child {
+    font-weight: 600;
+}
+
+.alert {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+}
+
+.alert-info,
+.alert-warning {
+    border-color: transparent;
+}
+
+.list-group {
+    border-radius: 8px;
+    box-shadow: var(--uni-shadow);
+}
+
+.list-group-item {
+    border-color: var(--uni-border);
+    font-weight: 600;
+}
+
+.list-group-item:hover {
+    background: #f1f6fc;
+    color: var(--uni-primary);
+}
+
+[href*="ai_chat"],
+a[href$="/chat"] {
+    border-color: var(--uni-accent);
+}
+
+.text-muted {
+    color: var(--uni-muted) !important;
+}
+
+footer {
+    background: #fff;
+}
+
+#chatMessages {
+    max-height: 520px;
+    overflow-y: auto;
+}
+
+#chatMessages .mb-3 {
+    max-width: 78%;
+}
+
+#chatMessages .mb-3:nth-child(odd) {
+    margin-left: auto;
+    text-align: right;
+}
+
+#chatMessages .mb-3:nth-child(even) {
+    margin-right: auto;
+}
+
+#chatMessages .mb-3 > div:last-child {
+    background: #eaf2ff;
+    border: 1px solid #d4e4ff;
+    border-radius: 12px;
+    display: inline-block;
+    padding: 0.65rem 0.8rem;
+    text-align: left;
+}
+
+#chatMessages .mb-3:nth-child(even) > div:last-child {
+    background: #f1f5f9;
+    border-color: var(--uni-border);
+}
+
+.loading,
+.is-loading {
+    opacity: 0.75;
+    pointer-events: none;
+}
+
+.badge-day,
+.table td:first-child {
+    color: var(--uni-primary);
+}
+
+@media (max-width: 768px) {
+    .card-body {
+        padding: 1rem;
+    }
+
+    form.row {
+        padding: 0.85rem;
+    }
+
+    .table td,
+    .table th {
+        min-width: 120px;
+    }
+
+    #chatMessages .mb-3 {
+        max-width: 92%;
+    }
+}
