@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Timetable - UniSchedule AI{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="h3 mb-1">My Timetable</h1>
+        <p class="text-muted mb-0">{{ course.name }} - Year {{ course.year }}, Semester {{ course.semester }}</p>
+    </div>
+    <a class="btn btn-primary" href="{{ url_for('ai_chat.chat') }}">AI Assistant</a>
+</div>
+
+<form class="row g-2 mb-4" method="get" action="{{ url_for('user.timetable') }}">
+    <div class="col-md-4">
+        <label class="form-label" for="day">Filter by day</label>
+        <select class="form-select" id="day" name="day">
+            <option value="">All days</option>
+            {% for day in days_of_week %}
+                <option value="{{ day }}" {% if selected_day == day %}selected{% endif %}>{{ day }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2 d-flex align-items-end">
+        <button class="btn btn-outline-primary w-100" type="submit">Filter</button>
+    </div>
+</form>
+
+{% if slots %}
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Time</th>
+                    <th>Subject</th>
+                    <th>Professor</th>
+                    <th>Room</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for slot in slots %}
+                    <tr>
+                        <td>{{ slot.day }}</td>
+                        <td>{{ slot.start_time.strftime("%H:%M") }}-{{ slot.end_time.strftime("%H:%M") }}</td>
+                        <td>{{ slot.subject.name }}</td>
+                        <td>{{ slot.professor.name }}</td>
+                        <td>{{ slot.room.name }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <div class="alert alert-info">No timetable slots found.</div>
+{% endif %}
+{% endblock %}

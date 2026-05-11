@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Home - UniSchedule AI{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="row align-items-center">
+        <div class="col-lg-8">
+            <h1 class="display-5 fw-semibold">University timetable management with AI assistant</h1>
+            <p class="lead text-muted mt-3">
+                View your course timetable, keep track of classes, and ask an AI assistant questions based on your schedule.
+            </p>
+            <div class="d-flex gap-2 mt-4">
+                <a class="btn btn-primary" href="{{ url_for('auth.login') }}">Login</a>
+                <a class="btn btn-outline-primary" href="{{ url_for('auth.register') }}">Register</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

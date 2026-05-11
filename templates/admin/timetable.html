@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Timetable - UniSchedule AI{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-4">Timetable</h1>
+<form class="row g-2 mb-4" method="post" action="{{ url_for('admin.add_timetable_slot') }}">
+    <div class="col-md-3">
+        <select class="form-select" name="subject_id" required>
+            <option value="">Subject</option>
+            {% for subject in subjects %}
+                <option value="{{ subject.id }}">{{ subject.name }} - {{ subject.course.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select class="form-select" name="professor_id" required>
+            <option value="">Professor</option>
+            {% for professor in professors %}
+                <option value="{{ professor.id }}">{{ professor.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select class="form-select" name="room_id" required>
+            <option value="">Room</option>
+            {% for room in rooms %}
+                <option value="{{ room.id }}">{{ room.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select class="form-select" name="day" required>
+            <option value="">Day</option>
+            {% for day in days_of_week %}
+                <option value="{{ day }}">{{ day }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-1"><input class="form-control" name="start_time" type="time" required></div>
+    <div class="col-md-1"><input class="form-control" name="end_time" type="time" required></div>
+    <div class="col-md-1"><button class="btn btn-primary w-100" type="submit">Add</button></div>
+</form>
+
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead><tr><th>Day</th><th>Time</th><th>Course</th><th>Subject</th><th>Professor</th><th>Room</th><th>Actions</th></tr></thead>
+        <tbody>
+            {% for slot in slots %}
+                <tr>
+                    <form method="post" action="{{ url_for('admin.edit_timetable_slot', id=slot.id) }}">
+                        <td>
+                            <select class="form-select" name="day" required>
+                                {% for day in days_of_week %}
+                                    <option value="{{ day }}" {% if slot.day == day %}selected{% endif %}>{{ day }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td class="d-flex gap-2">
+                            <input class="form-control" name="start_time" type="time" value="{{ slot.start_time.strftime('%H:%M') }}" required>
+                            <input class="form-control" name="end_time" type="time" value="{{ slot.end_time.strftime('%H:%M') }}" required>
+                        </td>
+                        <td>{{ slot.subject.course.name }}</td>
+                        <td>
+                            <select class="form-select" name="subject_id" required>
+                                {% for subject in subjects %}
+                                    <option value="{{ subject.id }}" {% if slot.subject_id == subject.id %}selected{% endif %}>{{ subject.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-select" name="professor_id" required>
+                                {% for professor in professors %}
+                                    <option value="{{ professor.id }}" {% if slot.professor_id == professor.id %}selected{% endif %}>{{ professor.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-select" name="room_id" required>
+                                {% for room in rooms %}
+                                    <option value="{{ room.id }}" {% if slot.room_id == room.id %}selected{% endif %}>{{ room.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-primary" type="submit">Save</button>
+                    </form>
+                            <form method="post" action="{{ url_for('admin.delete_timetable_slot', id=slot.id) }}">
+                                <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+                            </form>
+                        </td>
+                </tr>
+            {% else %}
+                <tr><td colspan="7" class="text-muted">No timetable slots found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

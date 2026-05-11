@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Subjects - UniSchedule AI{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-4">Subjects</h1>
+<form class="row g-2 mb-4" method="post" action="{{ url_for('admin.add_subject') }}">
+    <div class="col-md-5"><input class="form-control" name="name" placeholder="Subject name" required></div>
+    <div class="col-md-5">
+        <select class="form-select" name="course_id" required>
+            <option value="">Select course</option>
+            {% for course in courses %}
+                <option value="{{ course.id }}">{{ course.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2"><button class="btn btn-primary w-100" type="submit">Add</button></div>
+</form>
+
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead><tr><th>Name</th><th>Course</th><th>Actions</th></tr></thead>
+        <tbody>
+            {% for subject in subjects %}
+                <tr>
+                    <form method="post" action="{{ url_for('admin.edit_subject', id=subject.id) }}">
+                        <td><input class="form-control" name="name" value="{{ subject.name }}" required></td>
+                        <td>
+                            <select class="form-select" name="course_id" required>
+                                {% for course in courses %}
+                                    <option value="{{ course.id }}" {% if subject.course_id == course.id %}selected{% endif %}>{{ course.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-primary" type="submit">Save</button>
+                    </form>
+                            <form method="post" action="{{ url_for('admin.delete_subject', id=subject.id) }}">
+                                <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+                            </form>
+                        </td>
+                </tr>
+            {% else %}
+                <tr><td colspan="3" class="text-muted">No subjects found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

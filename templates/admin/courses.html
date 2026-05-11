@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Courses - UniSchedule AI{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-4">Courses</h1>
+<form class="row g-2 mb-4" method="post" action="{{ url_for('admin.add_course') }}">
+    <div class="col-md-4"><input class="form-control" name="name" placeholder="Course name" required></div>
+    <div class="col-md-2"><input class="form-control" name="year" type="number" placeholder="Year" required></div>
+    <div class="col-md-2"><input class="form-control" name="semester" type="number" placeholder="Semester" required></div>
+    <div class="col-md-2"><input class="form-control" name="student_count" type="number" placeholder="Students" required></div>
+    <div class="col-md-2"><button class="btn btn-primary w-100" type="submit">Add</button></div>
+</form>
+
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead><tr><th>Name</th><th>Year</th><th>Semester</th><th>Students</th><th>Actions</th></tr></thead>
+        <tbody>
+            {% for course in courses %}
+                <tr>
+                    <form method="post" action="{{ url_for('admin.edit_course', id=course.id) }}">
+                        <td><input class="form-control" name="name" value="{{ course.name }}" required></td>
+                        <td><input class="form-control" name="year" type="number" value="{{ course.year }}" required></td>
+                        <td><input class="form-control" name="semester" type="number" value="{{ course.semester }}" required></td>
+                        <td><input class="form-control" name="student_count" type="number" value="{{ course.student_count }}" required></td>
+                        <td class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-primary" type="submit">Save</button>
+                    </form>
+                            <form method="post" action="{{ url_for('admin.delete_course', id=course.id) }}">
+                                <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+                            </form>
+                        </td>
+                </tr>
+            {% else %}
+                <tr><td colspan="5" class="text-muted">No courses found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Register - UniSchedule AI{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h1 class="h3 mb-4">Register</h1>
+                {% if not courses %}
+                    <div class="alert alert-warning">
+                        No courses available. Please ask an administrator to create courses first.
+                    </div>
+                {% endif %}
+                <form method="post" action="{{ url_for('auth.register') }}">
+                    <div class="mb-3">
+                        <label class="form-label" for="username">Username</label>
+                        <input class="form-control" id="username" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="email">Email</label>
+                        <input class="form-control" id="email" name="email" type="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="password">Password</label>
+                        <input class="form-control" id="password" name="password" type="password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="confirm_password">Confirm Password</label>
+                        <input class="form-control" id="confirm_password" name="confirm_password" type="password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="course_id">Course</label>
+                        <select class="form-select" id="course_id" name="course_id" required>
+                            <option value="">Select a course</option>
+                            {% for course in courses %}
+                                <option value="{{ course.id }}">{{ course.name }} - Year {{ course.year }}, Semester {{ course.semester }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button class="btn btn-primary w-100" type="submit" {% if not courses %}disabled{% endif %}>Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
