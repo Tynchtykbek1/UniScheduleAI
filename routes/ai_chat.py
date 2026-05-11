@@ -88,7 +88,9 @@ Today is {current_day}."""
             ],
         )
         reply = response.output_text
-    except Exception:
+    except Exception as e:
+        print("OpenAI API error type:", type(e).__name__)
+        print("OpenAI API error message:", str(e))
         reply = "Sorry, the AI assistant is temporarily unavailable."
         save_chat_message(current_user.id, message, reply)
         return jsonify({"reply": reply}), 500
