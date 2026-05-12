@@ -1,9 +1,8 @@
-import os
 from datetime import datetime
 
 from flask import Blueprint, current_app, jsonify, render_template, request
 from flask_login import current_user, login_required
-from openai import OpenAI
+from google import genai
 
 from models import AIChatMessage, db
 from routes.user import format_timetable_for_ai
@@ -67,30 +66,24 @@ Student's timetable:
 
 Today is {current_day}."""
 
-    api_key = current_app.config.get("OPENAI_API_KEY") or os.getenv("OPENAI_API_KEY")
-    model = current_app.config.get("OPENAI_MODEL", os.getenv("OPENAI_MODEL", "gpt-4o-mini"))
+    api_key = current_app.config.get("GEMINI_API_KEY")
+    model = current_app.config.get("GEMINI_MODEL", "gemini-2.5-flash")
 
     if not api_key:
-        fallback_reply = (
-            "AI assistant is not configured. Please set OPENAI_API_KEY in your .env file."
-        )
-        save_chat_message(current_user.id, message, fallback_reply)
-        return jsonify({"reply": fallback_reply})
-
-    client = OpenAI(api_key=api_key)
+        reply = "AI assistant is not configured. Please set GEMINI_API_KEY in your .env file."
+        save_chat_message(current_user.id, message, reply)
+        return jsonify({"reply": reply})
 
     try:
-        response = client.responses.create(
+        client = genai.Client(api_key=api_key)
+        response = client.models.generate_content(
             model=model,
-            input=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": message},
-            ],
+            contents=f"{system_prompt}\n\nStudent question: {message}",
         )
-        reply = response.output_text
+        reply = response.text or "I could not generate a response."
     except Exception as e:
-        print("OpenAI API error type:", type(e).__name__)
-        print("OpenAI API error message:", str(e))
+        print("Gemini API error type:", type(e).__name__)
+        print("Gemini API error message:", str(e))
         reply = "Sorry, the AI assistant is temporarily unavailable."
         save_chat_message(current_user.id, message, reply)
         return jsonify({"reply": reply}), 500

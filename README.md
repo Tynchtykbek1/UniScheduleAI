@@ -38,7 +38,7 @@ Copy the example environment file:
 copy .env.example .env
 ```
 
-Edit `.env` if needed. If `OPENAI_API_KEY` is not set, the AI assistant will return a helpful fallback message instead of calling OpenAI.
+Edit `.env` if needed. If `GEMINI_API_KEY` is not set, the AI assistant will return a helpful fallback message instead of calling Gemini.
 
 ## Seed the Database
 

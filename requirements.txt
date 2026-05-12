@@ -2,6 +2,6 @@ flask
 flask-login
 flask-sqlalchemy
 werkzeug
-openai
+google-genai
 python-dotenv
 email-validator
