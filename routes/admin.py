@@ -60,7 +60,11 @@ def validate_timetable_slot(
     if subject.course.student_count > room.capacity:
         return "Room capacity is insufficient for this course."
 
-    slots_query = TimetableSlot.query.filter_by(day=day)
+    slots_query = (
+        TimetableSlot.query.join(Subject)
+        .join(Course)
+        .filter(TimetableSlot.day == day, Course.semester == subject.course.semester)
+    )
     if exclude_slot_id is not None:
         slots_query = slots_query.filter(TimetableSlot.id != exclude_slot_id)
 
